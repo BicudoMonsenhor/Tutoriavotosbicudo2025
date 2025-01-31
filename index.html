@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolha do Tutor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        .input-container label {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .input-container select, .input-container input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .input-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .input-container button:hover {
+            background-color: #45a049;
+        }
+
+        #resultados {
+            margin-top: 30px;
+            display: none;
+        }
+
+        #resultados table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #resultados th, #resultados td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #resultados th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        #numero-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .numero-botao {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 20px;
+            line-height: 50px;
+            border-radius: 50%;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .numero-botao:hover {
+            background-color: #45a049;
+        }
+
+        #nome-candidato {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        #senha-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #senha-container input {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        #senha-container button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        #senha-container button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Escolha o Tutor para o Aluno</h1>
+        <div class="input-container">
+            <label for="nome-aluno">Nome do Aluno</label>
+            <input type="text" id="nome-aluno" placeholder="Digite o nome do aluno">
+
+            <label for="tutor">Escolha o Tutor</label>
+            <select id="tutor">
+                <option value="">Selecione um tutor</option>
+                <option value="SAVIA MARIA DE ALMEIDA">SAVIA MARIA DE ALMEIDA</option>
+                <option value="SILVIO MOREIRA DE SOUZA">SILVIO MOREIRA DE SOUZA</option>
+                <option value="SUSANA MARIA BEZERRA DE SOUZA">SUSANA MARIA BEZERRA DE SOUZA</option>
+                <option value="TANIA MARA SILVA GONÇALVES">TANIA MARA SILVA GONÇALVES</option>
+            </select>
+            <button onclick="salvarNomeTutor()">Salvar</button>
+        </div>
+
+        <div id="resultados">
+            <h2>Resultados</h2>
+            <table id="tabela-resultados">
+                <thead>
+                    <tr>
+                        <th>Nome do Aluno</th>
+                        <th>Tutor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Resultados serão adicionados aqui -->
+                </tbody>
+            </table>
+        </div>
+
+        <button onclick="mostrarSenha()">Mostrar Resultados</button>
+
+        <div id="senha-container">
+            <label for="senha">Digite a senha para acessar os resultados:</label>
+            <input type="password" id="senha" placeholder="Digite a senha">
+            <button onclick="verificarSenha()">Acessar Resultados</button>
+        </div>
+
+        <div id="numero-container">
+            <h2>Escolha um número de tutor:</h2>
+            <div class="numero-botao" onclick="mostrarNomeTutor(1)">1</div>
+            <div class="numero-botao" onclick="mostrarNomeTutor(2)">2</div>
+            <div class="numero-botao" onclick="mostrarNomeTutor(3)">3</div>
+            <div class="numero-botao" onclick="mostrarNomeTutor(4)">4</div>
+        </div>
+
+        <div id="nome-candidato"></div>
+    </div>
+
+    <script>
+        const professores = [
+            "SAVIA MARIA DE ALMEIDA",
+            "SILVIO MOREIRA DE SOUZA",
+            "SUSANA MARIA BEZERRA DE SOUZA",
+            "TANIA MARA SILVA GONÇALVES"
+        ];
+
+        function salvarNomeTutor() {
+            const aluno = document.getElementById('nome-aluno').value;
+            const tutor = document.getElementById('tutor').value;
+
+            if (aluno && tutor) {
+                const tabelaResultados = document.getElementById('tabela-resultados').getElementsByTagName('tbody')[0];
+                const novaLinha = tabelaResultados.insertRow();
+                novaLinha.innerHTML = `
+                    <td>${aluno}</td>
+                    <td>${tutor}</td>
+                `;
+                document.getElementById('nome-aluno').value = '';
+                document.getElementById('tutor').value = '';
+                alert("Escolha salva!");
+            } else {
+                alert("Por favor, insira o nome do aluno e escolha um tutor.");
+            }
+        }
+
+        function mostrarSenha() {
+            const senhaContainer = document.getElementById('senha-container');
+            senhaContainer.style.display = senhaContainer.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function verificarSenha() {
+            const senha = document.getElementById('senha').value;
+            if (senha === "123") {
+                mostrarResultados();
+            } else {
+                alert("Senha incorreta. Tente novamente.");
+            }
+        }
+
+        function mostrarResultados() {
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.style.display = resultadosDiv.style.display === 'none' ? 'block' : 'none';
+            document.getElementById('senha-container').style.display = 'none';
+        }
+
+        function mostrarNomeTutor(numero) {
+            const nomeCandidato = document.getElementById('nome-candidato');
+            nomeCandidato.innerHTML = `Nome do Tutor: ${professores[numero - 1]}`;
+        }
+    </script>
+
+</body>
+</html>
