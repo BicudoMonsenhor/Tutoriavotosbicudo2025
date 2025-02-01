@@ -3,248 +3,392 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escolha do Tutor</title>
+    <title>Sistema de Votação de Tutores</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+        /* Estilos CSS */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+           background-image: url('bicu.jpg');
+           
         }
 
         .container {
-            width: 80%;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
+            background-color: rgba(132, 200, 231, 0.5);
+            
+            padding: 60px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
-        h1 {
+        h1,h2 {
             text-align: center;
-            color: #333;
+            font-size: 48px;
         }
 
-        .input-container {
-            margin-bottom: 20px;
+        form {
+            margin-bottom: 40px;
         }
 
-        .input-container label {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 5px;
+        label {
             display: block;
-        }
-
-        .input-container select, .input-container input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            font-size: 14px;
-        }
-
-        .input-container button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-
-        .input-container button:hover {
-            background-color: #45a049;
-        }
-
-        #resultados {
             margin-top: 30px;
+            font-weight: bold;
+            font-size: 32px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 24px;
+            margin-top: 16px;
+            margin-bottom: 40px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 32px;
+        }
+
+        button {
+            width: 100%;
+            padding: 24px;
+            background-color: #007BFF;
+            color: rgb(0, 0, 8);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 32px;
+        }
+
+        button:hover {
+            background-color:rgb(241, 18, 18);
+        }
+
+        #result {
+            text-align: center;
+        }
+
+        #listaResultados {
+            margin-top: 60px;
+        }
+
+        .hidden {
             display: none;
         }
 
-        #resultados table {
-            width: 100%;
-            border-collapse: collapse;
+        ul {
+            list-style-type: none;
+            padding: 0;
         }
 
-        #resultados th, #resultados td {
+        li {
+            background-color: #93cff7;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 32px;
+        }
+
+        /* Estilo para o botão de senha */
+        #botaoSenha {
+            width: 200px;
             padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        #resultados th {
-            background-color: #f2f2f2;
-            color: #333;
-        }
-
-        #numero-container {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .numero-botao {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 20px;
-            line-height: 50px;
-            border-radius: 50%;
-            margin: 10px;
+            background-color: #007BFF;
+            color: rgb(12, 12, 12);
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 28px;
+            margin: 20px auto;
+            display: block;
         }
 
-        .numero-botao:hover {
-            background-color: #45a049;
-        }
-
-        #nome-candidato {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #333;
+        #botaoSenha:hover {
+            background-color: #0056b3;
         }
 
         #senha-container {
             display: none;
+            text-align: center;
             margin-top: 20px;
         }
 
         #senha-container input {
-            width: 80%;
+            width: 50%;
+            font-size: 32px;
             padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            font-size: 14px;
         }
 
-        #senha-container button {
-            background-color: #f44336;
+        .whatsapp-button {
+            width: 100%;
+            padding: 20px;
+            background-color: #25D366;
             color: white;
-            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
+            font-size: 28px;
+            margin-top: 20px;
         }
 
-        #senha-container button:hover {
-            background-color: #e53935;
+        .whatsapp-button:hover {
+            background-color: #128C7E;
         }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h1>Escolha o Tutor para o Aluno</h1>
-        <div class="input-container">
-            <label for="nome-aluno">Nome do Aluno</label>
-            <input type="text" id="nome-aluno" placeholder="Digite o nome do aluno">
+        <h1>Bicudo-2025</h1>
+        <h2>Escolha do Tutorado</h2>
+        <form id="voting-form">
+            <label for="nome">Nome do Aluno:</label>
+            <input type="text" id="nome" name="nome" required>
 
-            <label for="tutor">Escolha o Tutor</label>
-            <select id="tutor">
-                <option value="">Selecione um tutor</option>
-                <option value="SAVIA MARIA DE ALMEIDA">SAVIA MARIA DE ALMEIDA</option>
-                <option value="SILVIO MOREIRA DE SOUZA">SILVIO MOREIRA DE SOUZA</option>
-                <option value="SUSANA MARIA BEZERRA DE SOUZA">SUSANA MARIA BEZERRA DE SOUZA</option>
-                <option value="TANIA MARA SILVA GONÇALVES">TANIA MARA SILVA GONÇALVES</option>
+            <label for="tutor">Escolha seu Tutor:</label>
+            <select id="tutor" name="tutor">
+                <option value="">clique aqui               ></option>
+                <option value="ALINE DAL PONTE SABBAG">ALINE DAL PONTE SABBAG</option>
+                <option value="ALINE PRISCILA GARCIA DA SILVA">ALINE PRISCILA GARCIA DA SILVA
+                    <option value="ALINE DAL PONTE SABBAG">ALINE DAL PONTE SABBAG</option>
+                    <option value="ALINE PRISCILA GARCIA DA SILVA">ALINE PRISCILA GARCIA DA SILVA</option>
+                    <option value="ANDREIA DE FATIMA GOMES PIEMONTE">ANDREIA DE FATIMA GOMES PIEMONTE</option>
+                    <option value="ANTONIO JOSÉ DO SANTOS JUNIOR">ANTONIO JOSÉ DO SANTOS JUNIOR</option>
+                    <option value="...">...</option>
+                    <option value="...">...</option>
+                    <option value="CRISTINA BALDINOTI">CRISTINA BALDINOTI</option>
+                    <option value="...">...</option>
+                    <option value="...">...</option>
+                    <option value="EDCARLOS DOS SANTOS">EDCARLOS DOS SANTOS</option>
+                    <option value="EDINEIA APARECIDA DE SOUZA">EDINEIA APARECIDA DE SOUZA</option>
+                    <option value="ELIANE ANDREA DIOMEDES">ELIANE ANDREA DIOMEDES</option>
+                    <option value="ELIZA GILIOLLI DOS SANTOS">ELIZA GILIOLLI DOS SANTOS</option>
+                    <option value="...">...</option>
+                    <option value="...">...</option>
+                    <option value="...">...</option>
+                    <option value="FLAVIO HENRIQUE CHAVES FILHO">FLAVIO HENRIQUE CHAVES FILHO</option>
+                    <option value="GRAZIELLE CHRISTINE MARANGONI SCARMANHÃ">GRAZIELLE CHRISTINE MARANGONI SCARMANHÃ</option>
+                    <option value="GRAZIELLE DE OLIVEIRA SANTOS">GRAZIELLE DE OLIVEIRA SANTOS</option>
+                    <option value="ITALO BERTONCINI">ITALO BERTONCINI</option>
+                    <option value="IZAÍAS NOGUEIRA RODRIGUES">IZAÍAS NOGUEIRA RODRIGUES</option>
+                    <option value="JANAINA TOGNON">JANAINA TOGNON</option>
+                    <option value="JAQUELINE PADERES SCORSAFAVA GARCIA">JAQUELINE PADERES SCORSAFAVA GARCIA</option>
+                    <option value="JOSELILIAN LOPES MIRALHA">JOSELILIAN LOPES MIRALHA</option>
+                    <option value="...">...</option>
+                    <option value="...">...</option>
+                    <option value="...">...</option>
+                    <option value="LEANDRO HENRIQUE DE SOUZA BEZERRA">LEANDRO HENRIQUE DE SOUZA BEZERRA</option>
+                    <option value="LURDES DOS SANTOS ELIAS LIMA">LURDES DOS SANTOS ELIAS LIMA</option>
+                    <option value="MAGDA APARECIDA DE OLIVEIRA PRADO">MAGDA APARECIDA DE OLIVEIRA PRADO</option>
+                    <option value="MARCIO ENRIQUE STANCKEVIZ">MARCIO ENRIQUE STANCKEVIZ</option>
+                    <option value="MARIANA SAKER DE CASTRO PAIVA">MARIANA SAKER DE CASTRO PAIVA</option>
+                    <option value="...">...</option>
+                    <option value="MILCE FERREIRA DE MOURA">MILCE FERREIRA DE MOURA</option>
+                    <option value="...">...</option>
+                    <option value="NATHÁLIA VERONESE MARTINS">NATHÁLIA VERONESE MARTINS</option>
+                    <option value="RAFAEL MARTINS DOS SANTOS">RAFAEL MARTINS DOS SANTOS</option>
+                    <option value="RENATO DAVID VALENTE">RENATO DAVID VALENTE</option>
+                    <option value="...">...</option>
+                    <option value="...">...</option>
+                    <option value="ROSANA LORAINE ARAUJO DE S. ZAMPIERI">ROSANA LORAINE ARAUJO DE S. ZAMPIERI</option>
+                    <option value="SAVIA BETHANIA CAVALCANTI">SAVIA BETHANIA CAVALCANTI</option>
+                    <option value="SILENE BERTASSI">SILENE BERTASSI</option>
+                    <option value="SILVIA REGINA FERREIRA BALLAS">SILVIA REGINA FERREIRA BALLAS</option>
+                    <option value="...">...</option>
+                    <option value="SONIA MARIA NABAS DOS SANTOS">SONIA MARIA NABAS DOS SANTOS</option>
+                    <option value="SUELI BATISTETTI VICENTE">SUELI BATISTETTI VICENTE</option>
+                    <option value="...">...</option>
+                    <option value="...">...</option>
+                </option>
+                <!-- Continue adding the rest of the list of professors -->
             </select>
-            <button onclick="salvarNomeTutor()">Salvar</button>
+
+            <button type="submit">Votar</button>
+        </form>
+
+        <div id="result">
+            <button id="botaoSenha">Inserir Senha</button>
+
+            <div id="senha-container">
+                <label for="senha">Digite a senha para ver os resultados:</label>
+                <input type="password" id="senha" placeholder="Senha">
+                <button id="mostrarResultados">Mostrar Resultados</button>
+            </div>
         </div>
 
-        <div id="resultados">
-            <h2>Resultados</h2>
-            <table id="tabela-resultados">
-                <thead>
-                    <tr>
-                        <th>Nome do Aluno</th>
-                        <th>Tutor</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Resultados serão adicionados aqui -->
-                </tbody>
-            </table>
+        <div id="listaResultados" class="hidden">
+            <h2>Resultados:</h2>
+            <ul id="resultados-lista"></ul>
+            <button class="whatsapp-button" id="enviarWhatsApp">Enviar via WhatsApp</button>
+            <button class="whatsapp-button" id="salvarPDF">Salvar em PDF</button>
         </div>
-
-        <button onclick="mostrarSenha()">Mostrar Resultados</button>
-
-        <div id="senha-container">
-            <label for="senha">Digite a senha para acessar os resultados:</label>
-            <input type="password" id="senha" placeholder="Digite a senha">
-            <button onclick="verificarSenha()">Acessar Resultados</button>
-        </div>
-
-        <div id="numero-container">
-            <h2>Escolha um número de tutor:</h2>
-            <div class="numero-botao" onclick="mostrarNomeTutor(1)">1</div>
-            <div class="numero-botao" onclick="mostrarNomeTutor(2)">2</div>
-            <div class="numero-botao" onclick="mostrarNomeTutor(3)">3</div>
-            <div class="numero-botao" onclick="mostrarNomeTutor(4)">4</div>
-        </div>
-
-        <div id="nome-candidato"></div>
     </div>
 
+    <!-- Som de confirmação -->
+    <audio id="somConfirmacao" src="urna.wav" preload="auto"></audio>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        const professores = [
-            "SAVIA MARIA DE ALMEIDA",
-            "SILVIO MOREIRA DE SOUZA",
-            "SUSANA MARIA BEZERRA DE SOUZA",
-            "TANIA MARA SILVA GONÇALVES"
-        ];
+        // Dados de votação
+        let votos = {
+            "...": [],
+            "ALINE DAL PONTE SABBAG": [],
+            "ALINE PRISCILA GARCIA DA SILVA": [],
+            "ALEX HENRIQUE GONÇALVES": [],
+            "ALINE DAL PONTE SABBAG": [],
+            "ALINE PRISCILA GARCIA DA SILVA": [],
+            "ANDREIA DE FATIMA GOMES PIEMONTE": [],
+            "ANTONIO JOSÉ DO SANTOS JUNIOR": [],
+            "...": [],
+            "...": [],
+            "CRISTINA BALDINOTI": [],
+            "...": [],
+            "...": [],
+            "EDCARLOS DOS SANTOS": [],
+            "EDINEIA APARECIDA DE SOUZA": [],
+            "ELIANE ANDREA DIOMEDES": [],
+            "ELIZA GILIOLLI DOS SANTOS": [],
+            "...": [],
+            "...": [],
+            "...": [],
+            "FLAVIO HENRIQUE CHAVES FILHO": [],
+            "GRAZIELLE CHRISTINE MARANGONI SCARMANHÃ": [],
+            "GRAZIELLE DE OLIVEIRA SANTOS": [],
+            "ITALO BERTONCINI": [],
+            "IZAÍAS NOGUEIRA RODRIGUES": [],
+            "JANAINA TOGNON": [],
+            "JAQUELINE PADERES SCORSAFAVA GARCIA": [],
+            "JOSELILIAN LOPES MIRALHA": [],
+            "...": [],
+            "...": [],
+            "...": [],
+            "LEANDRO HENRIQUE DE SOUZA BEZERRA": [],
+            "LURDES DOS SANTOS ELIAS LIMA": [],
+            "MAGDA APARECIDA DE OLIVEIRA PRADO": [],
+            "MARCIO ENRIQUE STANCKEVIZ": [],
+            "MARIANA SAKER DE CASTRO PAIVA": [],
+            "...": [],
+            "MILCE FERREIRA DE MOURA": [],
+            "....": [],
+            "NATHÁLIA VERONESE MARTINS": [],
+            "RAFAEL MARTINS DOS SANTOS": [],
+            "RENATO DAVID VALENTE": [],
+            "...": [],
+            "...": [],
+            "ROSANA LORAINE ARAUJO DE S. ZAMPIERI": [],
+            "SAVIA BETHANIA CAVALCANTI": [],
+            "SILENE BERTASSI": [],
+            "SILVIA REGINA FERREIRA BALLAS": [],
+            "...": [],
+            "SONIA MARIA NABAS DOS SANTOS": [],
+            "SUELI BATISTETTI VICENTE": [],
+            "...": [],
+            "...": [],
+            // Add all other professors here
+        };
 
-        function salvarNomeTutor() {
-            const aluno = document.getElementById('nome-aluno').value;
-            const tutor = document.getElementById('tutor').value;
+        document.getElementById('voting-form').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-            if (aluno && tutor) {
-                const tabelaResultados = document.getElementById('tabela-resultados').getElementsByTagName('tbody')[0];
-                const novaLinha = tabelaResultados.insertRow();
-                novaLinha.innerHTML = `
-                    <td>${aluno}</td>
-                    <td>${tutor}</td>
-                `;
-                document.getElementById('nome-aluno').value = '';
-                document.getElementById('tutor').value = '';
-                alert("Escolha salva!");
-            } else {
-                alert("Por favor, insira o nome do aluno e escolha um tutor.");
+            const nomeAluno = document.getElementById('nome').value;
+            const tutorEscolhido = document.getElementById('tutor').value;
+
+            if (!nomeAluno.trim()) {
+                alert('Por favor, insira o nome do aluno.');
+                return;
             }
-        }
 
-        function mostrarSenha() {
-            const senhaContainer = document.getElementById('senha-container');
-            senhaContainer.style.display = senhaContainer.style.display === 'none' ? 'block' : 'none';
-        }
+            votos[tutorEscolhido].push(nomeAluno);
+            document.getElementById('nome').value = '';
 
-        function verificarSenha() {
-            const senha = document.getElementById('senha').value;
-            if (senha === "123") {
-                mostrarResultados();
-            } else {
-                alert("Senha incorreta. Tente novamente.");
+            document.getElementById('somConfirmacao').play();
+            alert('Voto registrado com sucesso!');
+        });
+
+        document.getElementById('botaoSenha').addEventListener('click', function() {
+            document.getElementById('senha-container').style.display = 'block';
+        });
+
+        document.getElementById('mostrarResultados').addEventListener('click', function() {
+            const senhaInserida = document.getElementById('senha').value;
+            const senhaCorreta = '12345';
+
+            if (senhaInserida !== senhaCorreta) {
+                alert('Senha incorreta!');
+                return;
             }
-        }
 
-        function mostrarResultados() {
-            const resultadosDiv = document.getElementById('resultados');
-            resultadosDiv.style.display = resultadosDiv.style.display === 'none' ? 'block' : 'none';
-            document.getElementById('senha-container').style.display = 'none';
-        }
+            const listaResultados = document.getElementById('resultados-lista');
+            listaResultados.innerHTML = '';
 
-        function mostrarNomeTutor(numero) {
-            const nomeCandidato = document.getElementById('nome-candidato');
-            nomeCandidato.innerHTML = `Nome do Tutor: ${professores[numero - 1]}`;
-        }
+            for (const tutor in votos) {
+                if (votos[tutor].length > 0) {
+                    const li = document.createElement('li');
+                    li.textContent = `${tutor} - Total de votos: ${votos[tutor].length} | Alunos: ${votos[tutor].join(', ')}`;
+                    listaResultados.appendChild(li);
+                }
+            }
+
+            document.getElementById('listaResultados').classList.remove('hidden');
+        });
+
+        // Função para gerar o PDF com formatação de tabela
+        document.getElementById('salvarPDF').addEventListener('click', function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Adicionar título no PDF
+            doc.setFontSize(20);
+            doc.text("Resultados da Votação", 10, 10);
+
+            // Tabela de resultados
+            let startY = 20;
+            const columnHeaders = ['Professor', 'Total de Votos', 'Alunos'];
+
+            // Desenho da Tabela
+            doc.setFontSize(12);
+            doc.text(columnHeaders[0], 10, startY);
+            doc.text(columnHeaders[1], 100, startY);
+            doc.text(columnHeaders[2], 180, startY);
+
+            startY += 10;
+
+            // Preenchendo a tabela com os resultados
+            for (const tutor in votos) {
+                if (votos[tutor].length > 0) {
+                    doc.text(tutor, 10, startY);
+                    doc.text(votos[tutor].length.toString(), 100, startY);
+                    doc.text(votos[tutor].join(', '), 180, startY);
+                    startY += 10;
+                    doc.line(10, startY, 200, startY);  // Desenha a linha após cada linha de dados
+                }
+            }
+
+            // Gerar o PDF
+            doc.save('resultados_votacao.pdf');
+        });
+
+        // Função para enviar os resultados via WhatsApp
+        document.getElementById('enviarWhatsApp').addEventListener('click', function() {
+            let content = '';
+            const listaResultados = document.getElementById('resultados-lista');
+            listaResultados.querySelectorAll('li').forEach(li => {
+                content += li.textContent + '%0A';
+            });
+
+            const url = `https://wa.me/?text=${encodeURIComponent(content)}`;
+            window.open(url, '_blank');
+        });
     </script>
-
 </body>
 </html>
