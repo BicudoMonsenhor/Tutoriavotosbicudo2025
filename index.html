@@ -179,7 +179,7 @@
                 <option value="ALINE DAL PONTE SABBAG">ALINE DAL PONTE SABBAG</option>
                 <option value="ALINE PRISCILA GARCIA DA SILVA">ALINE PRISCILA GARCIA DA SILVA</option>
                 <option value="ANDREIA DE FATIMA GOMES PIEMONTE">ANDREIA DE FATIMA GOMES PIEMONTE</option>
-                <option value="ANTONIO JOSE DOS SANTOS JUNIOR">ANTONIO JOSE DOS SANTOS JUNIOR</option>
+                <option value="JUNIOR">ANTONIO JOSE DOS SANTOS JUNIOR</option>
                 <option value="CAIO HENRIQUE ESTRELA CARDIA">CAIO HENRIQUE ESTRELA CARDIA</option>
                 <option value="CLEBER ALBERTO GOMES">CLEBER ALBERTO GOMES</option>
                 <option value="CRISTINA BALDINOTI">CRISTINA BALDINOTI</option>
@@ -218,9 +218,12 @@
                 <option value="SAMUEL MACEDO PERICO">SAMUEL MACEDO PERICO</option>
                 <option value="SAVIA BETHANIA CAVALCANTI">SAVIA BETHANIA CAVALCANTI</option>
                 <option value="SILENE BERTASSI">SILENE BERTASSI</option>
+                <option value="SUELI BATISTA">SUELI BATISTA</option>
                 <option value="SONIA MARIA NABAS DOS SANTOS">SONIA MARIA NABAS DOS SANTOS</option>
                 <option value="EDUARDO LAZARO ROESLER DE OLIVEIRA">EDUARDO LAZARO ROESLER DE OLIVEIRA</option>
                 <option value="BRUNO PERES MOITINHO">BRUNO PERES MOITINHO</option>
+                <option value="ROSANA ROSSE">ROSANA ROSSE</option>
+                <option value="KLEBER GONSALVES">KLEBER GONSALVES</option>
                     
             </select>
 
@@ -255,27 +258,21 @@
             votos = JSON.parse(localStorage.getItem('votos'));
         } else {
             votos = {
-                "...": [],
                 "ALINE DAL PONTE SABBAG": [],
                 "ALINE PRISCILA GARCIA DA SILVA": [],
                 "ALEX HENRIQUE GONÇALVES": [],
-                "ALINE DAL PONTE SABBAG": [],
-                "ALINE PRISCILA GARCIA DA SILVA": [],
                 "ANDREIA DE FATIMA GOMES PIEMONTE": [],
                 "ANTONIO JOSÉ DO SANTOS JUNIOR": [],
-                "...": [],
-                "...": [],
+                "CAIO HENRIQUE ESTRELA CARDIA": [],
+                "CLEBER ALBERTO GOMES": [],
                 "CRISTINA BALDINOTI": [],
-                "...": [],
-                "...": [],
                 "EDCARLOS DOS SANTOS": [],
                 "EDINEIA APARECIDA DE SOUZA": [],
                 "ELIANE ANDREA DIOMEDES": [],
                 "ELIZA GILIOLLI DOS SANTOS": [],
-                "...": [],
-                "...": [],
-                "...": [],
                 "FLAVIO HENRIQUE CHAVES FILHO": [],
+                "GABRIEL RODRIGUES DA SILVA": [],
+                "GISLAINE DIAS CAPUTO": [],
                 "GRAZIELLE CHRISTINE MARANGONI SCARMANHÃ": [],
                 "GRAZIELLE DE OLIVEIRA SANTOS": [],
                 "ITALO BERTONCINI": [],
@@ -283,32 +280,39 @@
                 "JANAINA TOGNON": [],
                 "JAQUELINE PADERES SCORSAFAVA GARCIA": [],
                 "JOSELILIAN LOPES MIRALHA": [],
-                "...": [],
-                "...": [],
-                "...": [],
+                "JULIANA DE FATIMA SILVA SEGANTIN": [],
                 "LEANDRO HENRIQUE DE SOUZA BEZERRA": [],
+                "LUCILENE ARAUJO ROMANIW RAYMUNDO": [],
                 "LURDES DOS SANTOS ELIAS LIMA": [],
                 "MAGDA APARECIDA DE OLIVEIRA PRADO": [],
+                "MARCIA CRISTINA SIGEMURA": [],
                 "MARCIO ENRIQUE STANCKEVIZ": [],
+                "MARIA CANDIDA BRANCO DOS SANTOS": [],
+                "MARIA LUIZA MARTINS DE ARAUJO": [],
                 "MARIANA SAKER DE CASTRO PAIVA": [],
-                "...": [],
+                "MARINA PAIVA RAMOS": [],
+                "MATHEUS SANTOS DE OLIVEIRA": [],
                 "MILCE FERREIRA DE MOURA": [],
-                "....": [],
+                "MILENA MORAES DA SILVA": [],
                 "NATHÁLIA VERONESE MARTINS": [],
+                "ORIEL DE OLIVEIRA E SILVA": [],
                 "RAFAEL MARTINS DOS SANTOS": [],
+                "RAQUEL CRISTINA ROSSIGALLI BOL": [],
                 "RENATO DAVID VALENTE": [],
-                "...": [],
-                "...": [],
+                "RODRIGO BATISTA": [],
                 "ROSANA LORAINE ARAUJO DE S. ZAMPIERI": [],
+                "ROSANE FERREIRA DOS SANTOS GRACIANO": [],
+                "SAMUEL MACEDO PERICO": [],
                 "SAVIA BETHANIA CAVALCANTI": [],
                 "SILENE BERTASSI": [],
                 "SILVIA REGINA FERREIRA BALLAS": [],
-                "...": [],
                 "SONIA MARIA NABAS DOS SANTOS": [],
                 "SUELI BATISTETTI VICENTE": [],
-                "...": [],
-                "...": [],
-                // Add all other professors here
+                "SUELI BATISTA": [],
+                "EDUARDO LAZARO ROESLER DE OLIVEIRA": [],
+                "BRUNO PERES MOITINHO": [],
+                "ROSANA ROSSE": [],
+                "KLEBER GONSALVES": []
             };
         }
 
@@ -384,31 +388,52 @@
         document.getElementById('salvarPDF').addEventListener('click', function() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            
+        
             // Adicionar título no PDF
             doc.setFontSize(20);
             doc.text("Resultados da Votação", 10, 10);
-
+        
             let startY = 20;
             const columnHeaders = ['Professor', 'Total de Votos', 'Alunos'];
-
+        
             doc.setFontSize(12);
             doc.text(columnHeaders[0], 10, startY);
-            doc.text(columnHeaders[1], 100, startY);
-            doc.text(columnHeaders[2], 180, startY);
-
+            doc.text(columnHeaders[1], 80, startY);
+            doc.text(columnHeaders[2], 120, startY);
+        
             startY += 10;
-
+        
             for (const tutor in votos) {
                 if (votos[tutor].length > 0) {
                     doc.text(tutor, 10, startY);
-                    doc.text(votos[tutor].length.toString(), 100, startY);
-                    doc.text(votos[tutor].join(', '), 180, startY);
+                    doc.text(votos[tutor].length.toString(), 80, startY);
+        
+                    // Quebra o texto se for muito longo
+                    const alunosTexto = votos[tutor].join(', ');
+                    const alunosLinhas = doc.splitTextToSize(alunosTexto, 80);
+                    
+                    alunosLinhas.forEach((linha, index) => {
+                        if (index === 0) {
+                            doc.text(linha, 120, startY);
+                        } else {
+                            startY += 6; // Ajuste o espaçamento entre as linhas
+                            doc.text(linha, 120, startY);
+                        }
+                    });
+        
                     startY += 10;
-                    doc.line(10, startY, 200, startY);  // Desenha a linha após cada linha de dados
+        
+                    // Adiciona uma linha separadora
+                    doc.line(10, startY, 200, startY);
+        
+                    // Verifica se a posição Y está próxima do fim da página
+                    if (startY > 270) {
+                        doc.addPage();
+                        startY = 20; // Reseta a posição Y na nova página
+                    }
                 }
             }
-
+        
             doc.save('resultados_votacao.pdf');
         });
 
